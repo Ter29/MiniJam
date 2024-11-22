@@ -49,8 +49,9 @@ public class ChoosingCast : MonoBehaviour
             int songId = i + 1; // Призначення ID пісні (i + 1)
             button.onClick.AddListener(() => 
             {
-                PlaySong(randomSong, songId);
                 player.cast = songId;
+                StopSong();
+                HideAllButtons();
             });
             // Cursor touch button
             EventTrigger.Entry onPointerEnter = new EventTrigger.Entry
@@ -83,8 +84,19 @@ public class ChoosingCast : MonoBehaviour
             audioSource.Stop(); // stop song
         }            
     }
+    void HideAllButtons()
+    {
+        foreach (var button in buttons)
+        {
+            button.gameObject.SetActive(false); // Приховуємо кнопку
+        }
+    }
     void RefreshingSongs(){
         if(Input.GetKeyDown(KeyCode.R)){
+            foreach (var button in buttons)
+            {
+                button.gameObject.SetActive(true); // Приховуємо кнопку
+            }
             availableSongs = new List<AudioClip>(songs); //return all songs into list
             AssignRandomSongs();
         }
