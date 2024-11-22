@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
     public float moveSpeed = 5f;
     private Rigidbody2D rb;
     private Vector2 movement;
+    public int cast;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -14,6 +15,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         Mooving();
+        Debug.Log(cast);
     }
     void  FixedUpdate()
     {
