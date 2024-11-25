@@ -25,13 +25,19 @@ public class Player : MonoBehaviour
     private Rigidbody2D rb;
     private Animator animator;
     private SpriteRenderer spriteRenderer;
+
+    private Vector3 lastPosition;
+    private bool isMooving;
     public int cast;
+    
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+
+        lastPosition = transform.position;
     }
 
     void Update()
@@ -41,13 +47,17 @@ public class Player : MonoBehaviour
             Movement();
             HandleMovementInput();
             UpdateAnimation();
+            CheckingOfMoving();
         }
 
         // Додаємо перевірку на натискання Space для касту
         if (Input.GetKeyDown(KeyCode.Space) && !isCasting)
         {
-            CastSpell();
+            if(!isMooving){
+                CastSpell();
+            }
         }
+        Debug.Log(isMooving);
     }
 
     void FixedUpdate()
@@ -225,4 +235,15 @@ public class Player : MonoBehaviour
         }
     }
     
+    void CheckingOfMoving()
+    {
+        if (transform.position != lastPosition)
+        {
+            lastPosition = transform.position;
+            isMooving = true;
+        }
+        else{
+            isMooving = false;
+        }
+    }
 }
